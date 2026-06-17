@@ -33,15 +33,11 @@ export async function submitLeadToGoogleSheets(submission: ProjectLeadSubmission
     };
   }
 
-  await fetch(GOOGLE_SHEETS_WEB_APP_URL, {
-    method: "POST",
-    mode: "no-cors",
-    redirect: "follow",
-    headers: {
-      "Content-Type": "text/plain;charset=utf-8",
-    },
-    body: JSON.stringify(submission),
-  });
+  submitWithHiddenForm(GOOGLE_SHEETS_WEB_APP_URL, submission);
+
+  // Apps Script responses are not readable from static sites without CORS headers.
+  // The hidden form pattern avoids CORS entirely and reliably appends rows.
+  await new Promise((resolve) => window.setTimeout(resolve, 900));
 
   return {
     ok: true,
@@ -58,4 +54,40 @@ export function saveLeadBackup(submission: ProjectLeadSubmission) {
   const parsedLeads = existingLeads ? (JSON.parse(existingLeads) as ProjectLeadSubmission[]) : [];
 
   window.localStorage.setItem(storageKey, JSON.stringify([submission, ...parsedLeads].slice(0, 50)));
+}
+
+function submitWithHiddenForm(url: string, submission: ProjectLeadSubmission) {
+  const iframeName = `google-sheets-target-${Date.now()}`;
+  const iframe = document.createElement("iframe");
+  iframe.name = iframeName;
+  iframe.style.display = "none";
+
+  const form = document.createElement("form");
+  form.method = "POST";
+  form.action = url;
+  form.target = iframeName;
+  form.style.display = "none";
+
+  Object.entries(submission).forEach(([key, value]) => {
+    const input = document.createElement("input");
+    input.type = "hidden";
+    input.name = key;
+    input.value = value;
+    form.appendChild(input);
+  });
+
+  const payloadInput = document.createElement("input");
+  payloadInput.type = "hidden";
+  payloadInput.name = "payload";
+  payloadInput.value = JSON.stringify(submission);
+  form.appendChild(payloadInput);
+
+  document.body.appendChild(iframe);
+  document.body.appendChild(form);
+  form.submit();
+
+  window.setTimeout(() => {
+    form.remove();
+    iframe.remove();
+  }, 5000);
 }
