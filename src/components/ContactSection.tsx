@@ -208,7 +208,7 @@ export default function ContactSection() {
                 </div>
                 <div className={`inline-flex w-fit items-center gap-2 rounded-full border px-3 py-1.5 text-[11px] font-black uppercase tracking-wider ${GOOGLE_SHEETS_WEB_APP_URL ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-300" : "border-amber-500/30 bg-amber-500/10 text-amber-300"}`}>
                   <SheetsIcon className="h-4 w-4" />
-                  <span>{GOOGLE_SHEETS_WEB_APP_URL ? "Google Sheets Connected" : "Sheets URL Needed"}</span>
+                  <span>{GOOGLE_SHEETS_WEB_APP_URL ? "Connected" : "URL Needed"}</span>
                 </div>
               </div>
 
