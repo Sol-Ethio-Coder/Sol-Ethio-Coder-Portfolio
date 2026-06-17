@@ -17,8 +17,10 @@ export type GoogleSheetsResult = {
 };
 
 const env = (import.meta as ImportMeta & { env?: Record<string, string | undefined> }).env;
+const DEFAULT_GOOGLE_SHEETS_URL =
+  "https://script.google.com/macros/s/AKfycbwOvEqoTDK9anXi9JDtEj4p_Dy6-Thq765HqVsKXaTxx2ffSpXm2yMuLCBIDXe5QknCCg/exec";
 
-export const GOOGLE_SHEETS_WEB_APP_URL = env?.VITE_GOOGLE_SHEETS_WEB_APP_URL ?? "";
+export const GOOGLE_SHEETS_WEB_APP_URL = env?.VITE_GOOGLE_SHEETS_WEB_APP_URL ?? DEFAULT_GOOGLE_SHEETS_URL;
 
 export async function submitLeadToGoogleSheets(submission: ProjectLeadSubmission): Promise<GoogleSheetsResult> {
   saveLeadBackup(submission);

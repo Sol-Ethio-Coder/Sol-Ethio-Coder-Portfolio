@@ -9,7 +9,7 @@ const SHEET_NAME = "Project Leads";
 
 function doPost(e) {
   try {
-    const payload = JSON.parse(e.postData.contents || "{}");
+    const payload = getPayload(e);
     const sheet = getLeadSheet();
 
     sheet.appendRow([
@@ -24,10 +24,34 @@ function doPost(e) {
       payload.source || "Sol Ethio Coder Portfolio",
     ]);
 
-    return ContentService.createTextOutput(JSON.stringify({ status: "success" })).setMimeType(ContentService.MimeType.JSON);
+    return jsonResponse({ status: "success", message: "Lead saved successfully" });
   } catch (error) {
-    return ContentService.createTextOutput(JSON.stringify({ status: "error", message: error.message })).setMimeType(ContentService.MimeType.JSON);
+    return jsonResponse({ status: "error", message: error.message });
   }
+}
+
+function doGet() {
+  return jsonResponse({
+    status: "ready",
+    message: "Sol Ethio Coder Google Sheets endpoint is live",
+    sheetName: SHEET_NAME,
+  });
+}
+
+function getPayload(e) {
+  if (e && e.parameter && Object.keys(e.parameter).length > 0) {
+    return e.parameter;
+  }
+
+  if (e && e.postData && e.postData.contents) {
+    return JSON.parse(e.postData.contents);
+  }
+
+  return {};
+}
+
+function jsonResponse(data) {
+  return ContentService.createTextOutput(JSON.stringify(data)).setMimeType(ContentService.MimeType.JSON);
 }
 
 function getLeadSheet() {
