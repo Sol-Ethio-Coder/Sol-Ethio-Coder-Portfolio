@@ -3,7 +3,6 @@
 // Submitted At | Name | Email | Subject | Budget | Project Type | Timeline | Message | Source
 // 2. Extensions > Apps Script, paste this file, update SHEET_ID, deploy as Web App.
 // 3. Set access to "Anyone" and add the deployed URL as VITE_GOOGLE_SHEETS_WEB_APP_URL.
-// https://script.google.com/macros/s/AKfycbxqImU6OVIUIS2-FDZnG18c9TsyRVDOhStnu6bQPf2tz-4T347DztsqSHr3kFQqSN4Dfw/exec
 
 const SHEET_ID = "11Z8W7LcBEeyJd7IDyGlWbYKf0gBZ-MofGrmYZNGkJzk";
 const SHEET_NAME = "Project Leads";
