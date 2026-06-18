@@ -20,7 +20,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
   }, [onClose]);
 
   return (
-    <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 sm:p-6 print:hidden">
+    <div className="fixed inset-0 z-[200] flex items-center justify-center p-2 sm:p-6 print:hidden">
       {/* Immersive Dark Backdrop */}
       <motion.div
         initial={{ opacity: 0 }}
@@ -37,7 +37,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
         animate={{ opacity: 1, scale: 1, y: 0 }}
         exit={{ opacity: 0, scale: 0.9, y: 20 }}
         transition={{ type: "spring", damping: 25, stiffness: 350 }}
-        className="relative flex flex-col max-h-[90vh] w-full max-w-4xl overflow-hidden rounded-[2.5rem] border border-white/20 bg-[#0c1024] shadow-[0_20px_80px_rgba(0,0,0,0.9)] text-white"
+        className="relative flex max-h-[94vh] w-full max-w-4xl flex-col overflow-hidden rounded-[1.5rem] border border-white/20 bg-[#0c1024] text-white shadow-[0_20px_80px_rgba(0,0,0,0.9)] sm:max-h-[90vh] sm:rounded-[2.5rem]"
       >
         {/* Top Sticky Close Button & Accent Bar */}
         <div className={`h-2 w-full bg-gradient-to-r ${project.color}`} />
@@ -45,15 +45,15 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
         <button
           onClick={onClose}
           aria-label="Close Project Modal"
-          className="absolute top-6 right-6 z-30 flex h-11 w-11 items-center justify-center rounded-full bg-black/50 border border-white/10 text-slate-300 hover:bg-white/10 hover:text-white transition-all duration-300 hover:rotate-90"
+          className="absolute right-4 top-4 z-30 flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-black/50 text-slate-300 transition-all duration-300 hover:rotate-90 hover:bg-white/10 hover:text-white sm:right-6 sm:top-6 sm:h-11 sm:w-11"
         >
           <X className="h-6 w-6" />
         </button>
 
-        <div className="overflow-y-auto p-6 sm:p-10 space-y-8">
+        <div className="space-y-6 overflow-y-auto p-4 sm:space-y-8 sm:p-10">
           
           {/* Header section inside modal */}
-          <div className="space-y-4 max-w-2xl pr-12">
+          <div className="max-w-2xl space-y-4 pr-10 sm:pr-12">
             <div className="flex flex-wrap items-center gap-3">
               <span className={`inline-flex items-center gap-1.5 rounded-full px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-white bg-gradient-to-r ${project.color} shadow-lg`}>
                 <Sparkles className="h-3.5 w-3.5" />
@@ -72,7 +72,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
               )}
             </div>
 
-            <h2 className="text-3xl sm:text-5xl font-black tracking-tight text-white">{project.title}</h2>
+            <h2 className="text-2xl font-black tracking-tight text-white sm:text-5xl">{project.title}</h2>
             <p className="text-lg sm:text-xl font-medium text-cyan-300">{project.subtitle}</p>
           </div>
 
@@ -88,13 +88,13 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
             <img
               src={project.image}
               alt={project.title}
-              className="mt-8 w-full object-cover max-h-[450px] transition-transform duration-700 group-hover:scale-[1.02]"
+              className="mt-8 max-h-[450px] w-full object-cover transition-transform duration-700 group-hover:scale-[1.02]"
             />
           </div>
 
           {/* Long detailed story */}
           <div className="space-y-4">
-            <h3 className="text-2xl font-bold text-white flex items-center gap-2">
+            <h3 className="flex items-center gap-2 text-xl font-bold text-white sm:text-2xl">
               <FileTextIcon className="h-6 w-6 text-cyan-400" />
               <span>Project Overview & Architecture</span>
             </h3>
@@ -105,7 +105,7 @@ export default function ProjectModal({ project, onClose }: ProjectModalProps) {
 
           {/* Core Features Showcase */}
           {project.features && project.features.length > 0 && (
-            <div className="space-y-4 rounded-3xl border border-white/10 bg-white/5 p-6 sm:p-8 backdrop-blur-md">
+            <div className="space-y-4 rounded-3xl border border-white/10 bg-white/5 p-4 backdrop-blur-md sm:p-8">
               <h3 className="text-xl font-bold text-white flex items-center gap-2">
                 <Sparkles className="h-5 w-5 text-indigo-400" />
                 <span>Key Technical Capabilities Developed</span>

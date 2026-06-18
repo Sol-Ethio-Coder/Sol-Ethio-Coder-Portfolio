@@ -57,12 +57,12 @@ export default function SkillsSection() {
   }, [activeCategory, searchQuery]);
 
   return (
-    <section id="skills" className="relative min-h-screen bg-[#070913] py-28 text-white px-6 md:px-8 print:hidden">
+    <section id="skills" className="relative min-h-screen bg-[#070913] px-4 py-20 text-white sm:px-6 md:px-8 md:py-28 print:hidden">
       {/* Immersive background glowing elements */}
       <div className="absolute top-1/2 left-0 h-[500px] w-[500px] rounded-full bg-cyan-900/10 blur-[170px] pointer-events-none" />
       <div className="absolute bottom-10 right-10 h-[450px] w-[450px] rounded-full bg-fuchsia-900/10 blur-[160px] pointer-events-none" />
 
-      <div className="mx-auto max-w-7xl relative z-10 space-y-16">
+      <div className="relative z-10 mx-auto max-w-7xl space-y-10 sm:space-y-16">
         
         {/* Superior Section Header */}
         <motion.div
@@ -77,17 +77,17 @@ export default function SkillsSection() {
             <span>Technical Foundations</span>
           </div>
 
-          <h2 className="text-4xl font-black tracking-tight sm:text-6xl bg-gradient-to-r from-white via-slate-100 to-slate-300 bg-clip-text text-transparent">
+          <h2 className="text-3xl font-black tracking-tight sm:text-5xl lg:text-6xl bg-gradient-to-r from-white via-slate-100 to-slate-300 bg-clip-text text-transparent">
             The Premium <span className="bg-gradient-to-r from-cyan-400 via-indigo-400 to-fuchsia-400 bg-clip-text text-transparent">Tech Stack</span>
           </h2>
 
-          <p className="text-lg leading-8 text-slate-400 font-light max-w-2xl mx-auto">
+          <p className="mx-auto max-w-2xl text-base leading-7 text-slate-400 sm:text-lg sm:leading-8 font-light">
             A meticulously curated toolkit honed through enterprise software internships, computing science instruction, and production-grade client web products.
           </p>
         </motion.div>
 
         {/* Interactive Filtering Suite & Search */}
-        <div className="grid gap-6 rounded-3xl border border-white/10 bg-[#0f142d]/80 p-6 backdrop-blur-xl shadow-2xl lg:grid-cols-[1fr_auto] items-center">
+        <div className="grid items-center gap-4 rounded-3xl border border-white/10 bg-[#0f142d]/80 p-4 shadow-2xl backdrop-blur-xl sm:p-6 lg:grid-cols-[1fr_auto]">
           
           {/* Skill realtime search */}
           <div className="relative flex items-center">
@@ -96,7 +96,7 @@ export default function SkillsSection() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search technologies, concepts (e.g. Hooks, REST, Aggregation)..."
-              className="w-full rounded-2xl border border-white/10 bg-black/40 py-4 pl-14 pr-6 text-sm text-white placeholder-slate-400 outline-none ring-cyan-400 transition focus:border-cyan-400 focus:ring-2"
+              className="w-full rounded-2xl border border-white/10 bg-black/40 py-4 pl-12 pr-16 text-sm text-white placeholder-slate-400 outline-none ring-cyan-400 transition focus:border-cyan-400 focus:ring-2 sm:pl-14 sm:pr-6"
             />
             {searchQuery && (
               <button
@@ -109,14 +109,14 @@ export default function SkillsSection() {
           </div>
 
           {/* Superior Interactive Tab Bar */}
-          <div className="flex flex-wrap items-center gap-2 overflow-x-auto pb-1 lg:pb-0">
+          <div className="-mx-1 flex snap-x items-center gap-2 overflow-x-auto px-1 pb-2 lg:flex-wrap lg:pb-0">
             {categories.map((cat) => {
               const isActive = activeCategory === cat;
               return (
                 <button
                   key={cat}
                   onClick={() => setActiveCategory(cat)}
-                  className={`relative rounded-2xl px-5 py-3.5 text-sm font-semibold transition-all duration-300 whitespace-nowrap ${
+                  className={`relative snap-start whitespace-nowrap rounded-2xl px-4 py-3 text-xs font-semibold transition-all duration-300 sm:px-5 sm:py-3.5 sm:text-sm ${
                     isActive
                       ? "bg-gradient-to-r from-cyan-500 to-indigo-600 text-white shadow-lg shadow-cyan-500/30 scale-105"
                       : "border border-white/5 bg-white/5 text-slate-300 hover:bg-white/10 hover:text-white"
@@ -132,7 +132,7 @@ export default function SkillsSection() {
 
         {/* Not Found empty condition */}
         {filteredSkills.length === 0 && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="rounded-3xl border border-white/10 bg-[#0f142d]/40 p-16 text-center space-y-4 max-w-lg mx-auto">
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mx-auto max-w-lg space-y-4 rounded-3xl border border-white/10 bg-[#0f142d]/40 p-8 text-center sm:p-16">
             <Cpu className="mx-auto h-12 w-12 text-slate-500 animate-bounce" />
             <h3 className="text-xl font-bold text-white">No capabilities found</h3>
             <p className="text-sm text-slate-400">
@@ -155,7 +155,7 @@ export default function SkillsSection() {
                   transition={{ duration: 0.4, delay: index * 0.03 }}
                   whileHover={{ y: -6, scale: 1.02 }}
                   key={skill.name}
-                  className="group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-b from-[#11172f]/90 to-[#0a0d1e]/90 p-7 shadow-2xl backdrop-blur-xl transition-all duration-300 hover:border-cyan-500/50 hover:shadow-[0_20px_50px_rgba(34,211,238,0.15)]"
+                  className="group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-b from-[#11172f]/90 to-[#0a0d1e]/90 p-5 shadow-2xl backdrop-blur-xl transition-all duration-300 hover:border-cyan-500/50 hover:shadow-[0_20px_50px_rgba(34,211,238,0.15)] sm:p-7"
                 >
                   {/* Glowing background corner accent */}
                   <div className="absolute -right-10 -top-10 h-28 w-28 rounded-full bg-cyan-500 opacity-10 blur-xl group-hover:opacity-30 group-hover:bg-indigo-500 transition-all" />
@@ -173,7 +173,7 @@ export default function SkillsSection() {
                     </div>
 
                     <div>
-                      <h3 className="text-2xl font-black text-white tracking-tight">{skill.name}</h3>
+                      <h3 className="text-xl font-black tracking-tight text-white sm:text-2xl">{skill.name}</h3>
                       <p className="mt-2 text-xs font-medium uppercase tracking-wider text-indigo-300">{skill.category}</p>
                       <p className="mt-3 text-sm leading-6 text-slate-300 font-light">{skill.description}</p>
                     </div>

@@ -69,28 +69,28 @@ export default function Navbar() {
       <nav
         className={`transition-all duration-500 ${
           scrolled
-            ? "mx-auto mt-2 max-w-7xl rounded-full border border-white/10 bg-[#070913]/85 px-6 py-3 shadow-[0_10px_30px_rgba(0,0,0,0.8)] backdrop-blur-md md:px-8"
-            : "mx-auto flex max-w-7xl items-center justify-between px-6 py-5 md:px-8"
+            ? "mx-2 mt-2 max-w-7xl rounded-full border border-white/10 bg-[#070913]/85 px-3 py-3 shadow-[0_10px_30px_rgba(0,0,0,0.8)] backdrop-blur-md sm:mx-auto sm:px-6 md:px-8"
+            : "mx-auto flex max-w-7xl items-center justify-between px-4 py-5 sm:px-6 md:px-8"
         }`}
       >
         <div className="flex items-center justify-between w-full">
           {/* Brand Logo */}
           <a
             href="#home"
-            className="group flex items-center gap-3 text-xl font-bold tracking-tight text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400"
+            className="group flex min-w-0 items-center gap-2 text-lg font-bold tracking-tight text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-cyan-400 sm:gap-3 sm:text-xl"
           >
             <div className="relative flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-cyan-500 to-indigo-600 p-0.5 shadow-lg shadow-cyan-500/20 transition-transform duration-300 group-hover:scale-105 group-hover:rotate-6">
               <div className="flex h-full w-full items-center justify-center rounded-[10px] bg-[#070913]">
                 <Code2 className="h-5 w-5 text-cyan-400 transition-colors group-hover:text-cyan-300" />
               </div>
             </div>
-            <div className="flex flex-col">
+            <div className="flex min-w-0 flex-col">
               <span className="bg-gradient-to-r from-white via-slate-200 to-cyan-300 bg-clip-text text-transparent transition-all group-hover:from-cyan-300 group-hover:to-indigo-300">
                 {PROFILE.name.split(" ")[0]}
                 <span className="text-cyan-400">.</span>
-                <span className="text-sm font-medium text-slate-400">Ashagre</span>
+                <span className="hidden text-sm font-medium text-slate-400 min-[380px]:inline">Ashagre</span>
               </span>
-              <span className="text-[10px] uppercase tracking-widest text-cyan-400/80">
+              <span className="max-w-32 truncate text-[9px] uppercase tracking-widest text-cyan-400/80 sm:max-w-none sm:text-[10px]">
                 Sol Ethio Coder
               </span>
             </div>
@@ -167,7 +167,7 @@ export default function Navbar() {
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", damping: 30, stiffness: 300 }}
-              className="fixed inset-y-0 right-0 z-[101] flex w-4/5 max-w-sm flex-col justify-between border-l border-white/10 bg-[#0c0f1d] p-6 shadow-2xl lg:hidden"
+              className="fixed inset-y-0 right-0 z-[101] flex w-[88%] max-w-sm flex-col justify-between overflow-y-auto border-l border-white/10 bg-[#0c0f1d] p-5 shadow-2xl sm:p-6 lg:hidden"
             >
               <div>
                 {/* Header inside mobile menu */}

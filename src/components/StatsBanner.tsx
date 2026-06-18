@@ -35,7 +35,7 @@ export default function StatsBanner() {
   ];
 
   return (
-    <section className="relative z-20 -mt-10 px-6 md:px-8 print:hidden">
+    <section className="relative z-20 -mt-6 px-4 sm:-mt-10 sm:px-6 md:px-8 print:hidden">
       <div className="mx-auto max-w-7xl">
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {stats.map((stat, index) => {
@@ -48,7 +48,7 @@ export default function StatsBanner() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.6, delay: index * 0.1 }}
                 whileHover={{ y: -8, scale: 1.02 }}
-                className="group relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-b from-[#11172f]/90 to-[#090d1f]/90 p-8 shadow-2xl backdrop-blur-xl transition-all duration-300 hover:border-cyan-500/40 hover:shadow-[0_20px_50px_rgba(34,211,238,0.15)]"
+                className="group relative overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-b from-[#11172f]/90 to-[#090d1f]/90 p-5 shadow-2xl backdrop-blur-xl transition-all duration-300 hover:border-cyan-500/40 hover:shadow-[0_20px_50px_rgba(34,211,238,0.15)] sm:p-8"
               >
                 {/* Corner background ambient glow */}
                 <div className={`absolute -right-12 -top-12 h-32 w-32 rounded-full bg-gradient-to-br ${stat.gradient} opacity-20 blur-2xl group-hover:opacity-40 transition-opacity`} />

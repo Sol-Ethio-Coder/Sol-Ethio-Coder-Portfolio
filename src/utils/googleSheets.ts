@@ -1,4 +1,5 @@
 export type ProjectLeadSubmission = {
+  id: string;
   name: string;
   email: string;
   subject: string;
@@ -7,6 +8,8 @@ export type ProjectLeadSubmission = {
   timeline: string;
   message: string;
   source: string;
+  pageUrl: string;
+  userAgent: string;
   submittedAt: string;
 };
 
@@ -17,10 +20,18 @@ export type GoogleSheetsResult = {
 };
 
 const env = (import.meta as ImportMeta & { env?: Record<string, string | undefined> }).env;
-const DEFAULT_GOOGLE_SHEETS_URL =
+const FALLBACK_GOOGLE_SHEETS_URL =
   "https://script.google.com/macros/s/AKfycbwOvEqoTDK9anXi9JDtEj4p_Dy6-Thq765HqVsKXaTxx2ffSpXm2yMuLCBIDXe5QknCCg/exec";
 
-export const GOOGLE_SHEETS_WEB_APP_URL = env?.VITE_GOOGLE_SHEETS_WEB_APP_URL ?? DEFAULT_GOOGLE_SHEETS_URL;
+export const GOOGLE_SHEETS_WEB_APP_URL = env?.VITE_GOOGLE_SHEETS_WEB_APP_URL || FALLBACK_GOOGLE_SHEETS_URL;
+
+export function createSubmissionId() {
+  if (typeof crypto !== "undefined" && "randomUUID" in crypto) {
+    return crypto.randomUUID();
+  }
+
+  return `lead-${Date.now()}-${Math.random().toString(36).slice(2)}`;
+}
 
 export async function submitLeadToGoogleSheets(submission: ProjectLeadSubmission): Promise<GoogleSheetsResult> {
   saveLeadBackup(submission);
@@ -29,20 +40,20 @@ export async function submitLeadToGoogleSheets(submission: ProjectLeadSubmission
     return {
       ok: true,
       mode: "local-backup",
-      message: "Saved locally. Add VITE_GOOGLE_SHEETS_WEB_APP_URL to send this form directly to Google Sheets.",
+      message: "Saved locally. Add VITE_GOOGLE_SHEETS_WEB_APP_URL to connect Google Sheets.",
     };
   }
 
-  submitWithHiddenForm(GOOGLE_SHEETS_WEB_APP_URL, submission);
+  postToGoogleSheetsWithoutCors(GOOGLE_SHEETS_WEB_APP_URL, submission);
 
-  // Apps Script responses are not readable from static sites without CORS headers.
-  // The hidden form pattern avoids CORS entirely and reliably appends rows.
-  await new Promise((resolve) => window.setTimeout(resolve, 900));
+  // Apps Script responses are not readable from static sites without CORS.
+  // The form-target iframe pattern is the most reliable way to append rows from Netlify.
+  await new Promise((resolve) => window.setTimeout(resolve, 1000));
 
   return {
     ok: true,
     mode: "google-sheets",
-    message: "Sent to Google Sheets and backed up locally.",
+    message: "Submission sent to Google Sheets. A local backup was also saved in this browser.",
   };
 }
 
@@ -53,13 +64,14 @@ export function saveLeadBackup(submission: ProjectLeadSubmission) {
   const existingLeads = window.localStorage.getItem(storageKey);
   const parsedLeads = existingLeads ? (JSON.parse(existingLeads) as ProjectLeadSubmission[]) : [];
 
-  window.localStorage.setItem(storageKey, JSON.stringify([submission, ...parsedLeads].slice(0, 50)));
+  window.localStorage.setItem(storageKey, JSON.stringify([submission, ...parsedLeads].slice(0, 100)));
 }
 
-function submitWithHiddenForm(url: string, submission: ProjectLeadSubmission) {
-  const iframeName = `google-sheets-target-${Date.now()}`;
+function postToGoogleSheetsWithoutCors(url: string, submission: ProjectLeadSubmission) {
+  const iframeName = `sol-google-sheets-target-${submission.id}`;
   const iframe = document.createElement("iframe");
   iframe.name = iframeName;
+  iframe.title = "Google Sheets submission target";
   iframe.style.display = "none";
 
   const form = document.createElement("form");
@@ -76,12 +88,6 @@ function submitWithHiddenForm(url: string, submission: ProjectLeadSubmission) {
     form.appendChild(input);
   });
 
-  const payloadInput = document.createElement("input");
-  payloadInput.type = "hidden";
-  payloadInput.name = "payload";
-  payloadInput.value = JSON.stringify(submission);
-  form.appendChild(payloadInput);
-
   document.body.appendChild(iframe);
   document.body.appendChild(form);
   form.submit();
@@ -89,5 +95,5 @@ function submitWithHiddenForm(url: string, submission: ProjectLeadSubmission) {
   window.setTimeout(() => {
     form.remove();
     iframe.remove();
-  }, 5000);
+  }, 6000);
 }

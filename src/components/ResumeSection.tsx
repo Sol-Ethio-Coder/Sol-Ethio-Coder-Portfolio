@@ -11,12 +11,12 @@ export default function ResumeSection() {
   };
 
   return (
-    <section id="resume" className="relative min-h-screen bg-[#070913] py-28 text-white px-6 md:px-8 print:hidden">
+    <section id="resume" className="relative min-h-screen bg-[#070913] px-4 py-20 text-white sm:px-6 md:px-8 md:py-28 print:hidden">
       {/* Immersive Background Glow Orbs */}
       <div className="absolute top-1/4 right-10 h-[500px] w-[500px] rounded-full bg-indigo-900/10 blur-[160px] pointer-events-none" />
       <div className="absolute bottom-1/4 left-10 h-[450px] w-[450px] rounded-full bg-cyan-900/10 blur-[150px] pointer-events-none" />
 
-      <div className="mx-auto max-w-7xl relative z-10 space-y-16">
+      <div className="relative z-10 mx-auto max-w-7xl space-y-10 sm:space-y-16">
         
         {/* Superior Section Header & Print Trigger */}
         <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8">
@@ -32,11 +32,11 @@ export default function ResumeSection() {
               <span>Professional Biography</span>
             </div>
 
-            <h2 className="text-4xl font-black tracking-tight sm:text-6xl bg-gradient-to-r from-white via-slate-100 to-slate-300 bg-clip-text text-transparent">
+            <h2 className="text-3xl font-black tracking-tight sm:text-5xl lg:text-6xl bg-gradient-to-r from-white via-slate-100 to-slate-300 bg-clip-text text-transparent">
               Career <span className="bg-gradient-to-r from-teal-400 via-cyan-400 to-indigo-400 bg-clip-text text-transparent">Timeline</span>
             </h2>
 
-            <p className="text-lg leading-8 text-slate-400 font-light">
+            <p className="text-base leading-7 text-slate-400 sm:text-lg sm:leading-8 font-light">
               An engineering background bridging full-stack MERN orchestration, computing science pedagogy at Trillium, and EdTech product leadership.
             </p>
           </motion.div>
@@ -44,7 +44,7 @@ export default function ResumeSection() {
           <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} className="shrink-0">
             <button
               onClick={printResume}
-              className="group relative inline-flex items-center gap-3 overflow-hidden rounded-full bg-gradient-to-r from-teal-500 via-cyan-500 to-indigo-600 px-8 py-4 font-bold text-white shadow-xl shadow-cyan-500/25 transition-all duration-300 hover:scale-105 active:scale-95"
+              className="group relative inline-flex w-full items-center justify-center gap-3 overflow-hidden rounded-full bg-gradient-to-r from-teal-500 via-cyan-500 to-indigo-600 px-6 py-4 font-bold text-white shadow-xl shadow-cyan-500/25 transition-all duration-300 hover:scale-105 active:scale-95 sm:w-auto sm:px-8"
             >
               <Printer className="h-5 w-5 transition-transform group-hover:rotate-12" />
               <span>Export Immersive PDF CV</span>
@@ -53,10 +53,10 @@ export default function ResumeSection() {
         </div>
 
         {/* Career interactive timeline toggles */}
-        <div className="flex items-center justify-center sm:justify-start gap-4 border-b border-white/10 pb-4">
+        <div className="flex flex-col items-stretch justify-center gap-3 border-b border-white/10 pb-4 sm:flex-row sm:justify-start sm:gap-4">
           <button
             onClick={() => setActiveTab("experience")}
-            className={`flex items-center gap-3 rounded-2xl px-6 py-4 text-base font-bold transition-all ${
+            className={`flex items-center justify-center gap-3 rounded-2xl px-4 py-3 text-sm font-bold transition-all sm:justify-start sm:px-6 sm:py-4 sm:text-base ${
               activeTab === "experience"
                 ? "bg-gradient-to-r from-cyan-500 to-indigo-600 text-white shadow-lg shadow-cyan-500/25 scale-105"
                 : "bg-white/5 text-slate-400 hover:bg-white/10 hover:text-white"
@@ -68,7 +68,7 @@ export default function ResumeSection() {
 
           <button
             onClick={() => setActiveTab("education")}
-            className={`flex items-center gap-3 rounded-2xl px-6 py-4 text-base font-bold transition-all ${
+            className={`flex items-center justify-center gap-3 rounded-2xl px-4 py-3 text-sm font-bold transition-all sm:justify-start sm:px-6 sm:py-4 sm:text-base ${
               activeTab === "education"
                 ? "bg-gradient-to-r from-cyan-500 to-indigo-600 text-white shadow-lg shadow-cyan-500/25 scale-105"
                 : "bg-white/5 text-slate-400 hover:bg-white/10 hover:text-white"
@@ -80,7 +80,7 @@ export default function ResumeSection() {
         </div>
 
         {/* Animated Timeline Cards Suite */}
-        <motion.div layout className="relative pl-6 sm:pl-10 border-l-2 border-cyan-500/30 space-y-12">
+        <motion.div layout className="relative space-y-8 border-l-2 border-cyan-500/30 pl-5 sm:space-y-12 sm:pl-10">
           <AnimatePresence mode="wait">
             {activeTab === "experience" && (
               <motion.div
@@ -103,15 +103,15 @@ export default function ResumeSection() {
                     {/* Glowing dot on the vertical line */}
                     <div className="absolute -left-[33px] sm:-left-[49px] top-4 h-5 w-5 rounded-full bg-cyan-400 border-4 border-[#070913] group-hover:scale-125 group-hover:bg-indigo-400 transition-all shadow-[0_0_10px_#22d3ee]" />
 
-                    <div className="rounded-3xl border border-white/10 bg-gradient-to-br from-[#111630]/80 to-[#0c0f24]/80 p-8 shadow-2xl backdrop-blur-xl group-hover:border-cyan-500/40 transition-all space-y-6">
+                    <div className="space-y-5 rounded-3xl border border-white/10 bg-gradient-to-br from-[#111630]/80 to-[#0c0f24]/80 p-5 shadow-2xl backdrop-blur-xl transition-all group-hover:border-cyan-500/40 sm:space-y-6 sm:p-8">
                       
                       <div className="flex flex-wrap items-center justify-between gap-4">
                         <div>
                           <span className="inline-flex items-center gap-1.5 rounded-full bg-cyan-500/10 border border-cyan-500/30 px-3 py-1 text-xs font-bold text-cyan-300 uppercase tracking-wider mb-2">
                             {item.type}
                           </span>
-                          <h3 className="text-3xl font-black text-white tracking-tight">{item.title}</h3>
-                          <p className="text-xl font-bold text-indigo-300 mt-1">{item.company}</p>
+                          <h3 className="text-2xl font-black tracking-tight text-white sm:text-3xl">{item.title}</h3>
+                          <p className="mt-1 text-lg font-bold text-indigo-300 sm:text-xl">{item.company}</p>
                         </div>
 
                         <div className="flex flex-col items-start sm:items-end text-xs font-medium text-slate-400 gap-1.5">
@@ -181,14 +181,14 @@ export default function ResumeSection() {
                   >
                     <div className="absolute -left-[33px] sm:-left-[49px] top-4 h-5 w-5 rounded-full bg-indigo-400 border-4 border-[#070913] group-hover:scale-125 group-hover:bg-cyan-400 transition-all shadow-[0_0_10px_#818cf8]" />
 
-                    <div className="rounded-3xl border border-white/10 bg-gradient-to-br from-[#111630]/80 to-[#0c0f24]/80 p-8 shadow-2xl backdrop-blur-xl group-hover:border-indigo-500/40 transition-all space-y-6">
+                      <div className="space-y-5 rounded-3xl border border-white/10 bg-gradient-to-br from-[#111630]/80 to-[#0c0f24]/80 p-5 shadow-2xl backdrop-blur-xl transition-all group-hover:border-indigo-500/40 sm:space-y-6 sm:p-8">
                       <div className="flex flex-wrap items-center justify-between gap-4">
                         <div>
                           <span className="inline-flex items-center gap-1.5 rounded-full bg-indigo-500/10 border border-indigo-500/30 px-3 py-1 text-xs font-bold text-indigo-300 uppercase tracking-wider mb-2">
                             Academic Journey
                           </span>
-                          <h3 className="text-3xl font-black text-white tracking-tight">{item.degree}</h3>
-                          <p className="text-xl font-bold text-cyan-300 mt-1">{item.school}</p>
+                          <h3 className="text-2xl font-black tracking-tight text-white sm:text-3xl">{item.degree}</h3>
+                          <p className="mt-1 text-lg font-bold text-cyan-300 sm:text-xl">{item.school}</p>
                         </div>
 
                         <div className="flex flex-col items-start sm:items-end text-xs font-medium text-slate-400 gap-1.5">
@@ -222,7 +222,7 @@ export default function ResumeSection() {
         <div className="pt-16 border-t border-white/10 space-y-10">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <div>
-              <h3 className="text-3xl font-black tracking-tight text-white flex items-center gap-3">
+              <h3 className="flex items-center gap-3 text-2xl font-black tracking-tight text-white sm:text-3xl">
                 <Award className="h-8 w-8 text-amber-400" />
                 <span>Certifications & Industry Badges</span>
               </h3>
@@ -242,7 +242,7 @@ export default function ResumeSection() {
                 viewport={{ once: true }}
                 transition={{ duration: 0.4, delay: index * 0.05 }}
                 whileHover={{ y: -4, scale: 1.02 }}
-                className="group relative flex items-center justify-between gap-4 rounded-2xl border border-white/10 bg-[#0f142d]/60 p-5 backdrop-blur-md transition-all hover:border-amber-500/40 hover:bg-[#0f142d]"
+                className="group relative flex flex-col items-start justify-between gap-4 rounded-2xl border border-white/10 bg-[#0f142d]/60 p-5 backdrop-blur-md transition-all hover:border-amber-500/40 hover:bg-[#0f142d] min-[430px]:flex-row min-[430px]:items-center"
               >
                 <div className="flex items-center gap-3.5">
                   <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-400 group-hover:bg-amber-500 group-hover:text-black transition-colors">

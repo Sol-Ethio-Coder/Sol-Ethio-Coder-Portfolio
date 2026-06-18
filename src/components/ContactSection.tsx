@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import confetti from "canvas-confetti";
 import { Mail, MapPin, Send, MessageSquare, CheckCircle2, Sparkles, ArrowUpRight, Loader2 } from "lucide-react";
 import { PROFILE } from "../data/portfolioData";
-import { GOOGLE_SHEETS_WEB_APP_URL, ProjectLeadSubmission, submitLeadToGoogleSheets } from "../utils/googleSheets";
+import { GOOGLE_SHEETS_WEB_APP_URL, ProjectLeadSubmission, createSubmissionId, submitLeadToGoogleSheets } from "../utils/googleSheets";
 
 export default function ContactSection() {
   const [formSubmitted, setFormSubmitted] = useState(false);
@@ -24,6 +24,7 @@ export default function ContactSection() {
 
     const formData = new FormData(e.currentTarget);
     const submission: ProjectLeadSubmission = {
+      id: createSubmissionId(),
       name: String(formData.get("name") || "Valued Partner"),
       email: String(formData.get("email") || ""),
       subject: String(formData.get("subject") || "New Development Project"),
@@ -32,10 +33,17 @@ export default function ContactSection() {
       timeline: selectedTimeline,
       message: String(formData.get("message") || ""),
       source: "Sol Ethio Coder Portfolio",
+      pageUrl: window.location.href,
+      userAgent: navigator.userAgent,
       submittedAt: new Date().toISOString(),
     };
 
-    const result = await submitLeadToGoogleSheets(submission);
+    try {
+      const result = await submitLeadToGoogleSheets(submission);
+      setSubmitStatus(result.message);
+    } catch (error) {
+      setSubmitStatus("Saved locally, but Google Sheets did not accept the request. Check the Apps Script deployment.");
+    }
 
     // Trigger phenomenal confetti celebration
     confetti({
@@ -45,7 +53,6 @@ export default function ContactSection() {
       colors: ["#22d3ee", "#6366f1", "#10b981", "#f59e0b", "#ec4899"],
     });
 
-    setSubmitStatus(result.message);
     setFormSubmitted(true);
     setIsSubmitting(false);
 
@@ -62,7 +69,7 @@ export default function ContactSection() {
   };
 
   return (
-    <section id="contact" className="relative min-h-screen bg-[#070913] py-28 text-white px-6 md:px-8 print:hidden">
+    <section id="contact" className="relative min-h-screen bg-[#070913] px-4 py-20 text-white sm:px-6 md:px-8 md:py-28 print:hidden">
       {/* Immersive ambient glowing elements */}
       <div className="absolute top-1/4 left-0 h-[600px] w-[600px] rounded-full bg-cyan-900/10 blur-[170px] pointer-events-none" />
       <div className="absolute bottom-10 right-0 h-[600px] w-[600px] rounded-full bg-indigo-900/10 blur-[160px] pointer-events-none" />
@@ -82,16 +89,16 @@ export default function ContactSection() {
             <span>Initiate a Partnership</span>
           </div>
 
-          <h2 className="text-4xl font-black tracking-tight sm:text-6xl bg-gradient-to-r from-white via-slate-100 to-slate-300 bg-clip-text text-transparent">
+          <h2 className="text-3xl font-black tracking-tight sm:text-5xl lg:text-6xl bg-gradient-to-r from-white via-slate-100 to-slate-300 bg-clip-text text-transparent">
             Let's Bring Your <span className="bg-gradient-to-r from-cyan-400 via-teal-300 to-indigo-400 bg-clip-text text-transparent">Ideas to Life</span>
           </h2>
 
-          <p className="text-lg leading-8 text-slate-400 font-light max-w-2xl mx-auto">
+          <p className="mx-auto max-w-2xl text-base leading-7 text-slate-400 sm:text-lg sm:leading-8 font-light">
             Whether you require a high-velocity full stack application, custom online STEM academy platform, or private technical consulting, reach out directly below.
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 gap-12 lg:grid-cols-12">
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-12">
           
           {/* Left Direct Contact Quick Pills */}
           <motion.div
@@ -99,11 +106,11 @@ export default function ContactSection() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="lg:col-span-5 flex flex-col justify-between rounded-3xl border border-white/10 bg-gradient-to-b from-[#111630]/90 to-[#0b0e22]/90 p-8 sm:p-12 shadow-2xl backdrop-blur-xl space-y-8"
+            className="lg:col-span-5 flex flex-col justify-between rounded-3xl border border-white/10 bg-gradient-to-b from-[#111630]/90 to-[#0b0e22]/90 p-5 sm:p-8 lg:p-12 shadow-2xl backdrop-blur-xl space-y-8"
           >
             <div className="space-y-8">
               <div className="space-y-3">
-                <h3 className="text-3xl font-black tracking-tight text-white">Direct Channels</h3>
+                <h3 className="text-2xl font-black tracking-tight text-white sm:text-3xl">Direct Channels</h3>
                 <p className="text-slate-300 font-light text-base leading-7">
                   I am highly active across these professional networks and typically respond within 2 hours.
                 </p>
@@ -115,10 +122,10 @@ export default function ContactSection() {
                 {/* Email Channel */}
                 <a
                   href={`mailto:${PROFILE.email}`}
-                  className="group flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 p-4 transition-all duration-300 hover:border-cyan-400 hover:bg-white/10"
+                  className="group flex min-w-0 items-center justify-between gap-3 rounded-2xl border border-white/10 bg-white/5 p-4 transition-all duration-300 hover:border-cyan-400 hover:bg-white/10"
                 >
                   <div className="flex min-w-0 items-center gap-4">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 group-hover:bg-cyan-500 group-hover:text-black transition-colors">
+                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 group-hover:bg-cyan-500 group-hover:text-black transition-colors sm:h-12 sm:w-12">
                       <Mail className="h-6 w-6" />
                     </div>
                     <div className="min-w-0">
@@ -134,10 +141,10 @@ export default function ContactSection() {
                   href={PROFILE.socials.telegram}
                   target="_blank"
                   rel="noreferrer"
-                  className="group flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 p-4 transition-all duration-300 hover:border-indigo-400 hover:bg-white/10"
+                  className="group flex min-w-0 items-center justify-between gap-3 rounded-2xl border border-white/10 bg-white/5 p-4 transition-all duration-300 hover:border-indigo-400 hover:bg-white/10"
                 >
                   <div className="flex min-w-0 items-center gap-4">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-500/10 border border-indigo-500/30 text-indigo-400 group-hover:bg-indigo-500 group-hover:text-white transition-colors">
+                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-indigo-500/10 border border-indigo-500/30 text-indigo-400 group-hover:bg-indigo-500 group-hover:text-white transition-colors sm:h-12 sm:w-12">
                       <TelegramIcon className="h-6 w-6" />
                     </div>
                     <div className="min-w-0">
@@ -153,10 +160,10 @@ export default function ContactSection() {
                   href={PROFILE.socials.whatsapp}
                   target="_blank"
                   rel="noreferrer"
-                  className="group flex items-center justify-between rounded-2xl border border-white/10 bg-white/5 p-4 transition-all duration-300 hover:border-emerald-400 hover:bg-white/10"
+                  className="group flex min-w-0 items-center justify-between gap-3 rounded-2xl border border-white/10 bg-white/5 p-4 transition-all duration-300 hover:border-emerald-400 hover:bg-white/10"
                 >
                   <div className="flex min-w-0 items-center gap-4">
-                    <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 group-hover:bg-emerald-500 group-hover:text-black transition-colors">
+                    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 group-hover:bg-emerald-500 group-hover:text-black transition-colors sm:h-12 sm:w-12">
                       <WhatsAppIcon className="h-6 w-6" />
                     </div>
                     <div className="min-w-0">
@@ -201,7 +208,7 @@ export default function ContactSection() {
             <div className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-[#0c1025]/90 p-4 shadow-2xl backdrop-blur-xl sm:p-8 lg:p-12">
               
               {/* Form title */}
-              <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
+              <div className="mb-8 flex flex-col gap-4 xl:flex-row xl:items-start xl:justify-between">
                 <div className="space-y-2">
                   <h3 className="text-2xl font-black tracking-tight text-white sm:text-3xl">Project Specifications Form</h3>
                   <p className="max-w-xl text-sm leading-6 text-slate-400">Fill in your requirements. The form is mobile-first and Google Sheets ready for automatic lead tracking.</p>
@@ -245,7 +252,7 @@ export default function ContactSection() {
                   <form key="form" onSubmit={handleFormSubmit} className="space-y-6">
                     
                     {/* Grid Inputs */}
-                    <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+                    <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
                       
                       {/* Name input */}
                       <div className="space-y-2">
@@ -284,7 +291,7 @@ export default function ContactSection() {
                     </div>
 
                     {/* Project type and timeline selectors */}
-                    <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+                    <div className="grid grid-cols-1 gap-6 xl:grid-cols-2">
                       <div className="space-y-3">
                         <label className="text-xs font-bold uppercase tracking-wider text-slate-300">Project Type</label>
                         <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">

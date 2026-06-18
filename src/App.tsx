@@ -21,7 +21,7 @@ export default function App() {
       <Navbar />
 
       {/* Primary Content Suite */}
-      <main className="relative z-10 space-y-20 sm:space-y-32 overflow-hidden print:space-y-0 print:overflow-visible">
+      <main className="relative z-10 overflow-hidden print:overflow-visible">
         <Hero />
         <StatsBanner />
         <ProjectsSection />
