@@ -373,7 +373,7 @@ export default function ContactSection() {
                       className="group flex w-full items-center justify-center gap-3 rounded-full bg-gradient-to-r from-cyan-500 via-teal-400 to-indigo-600 px-5 py-5 text-center text-sm font-black text-black shadow-xl shadow-cyan-500/25 transition-all duration-300 hover:shadow-cyan-500/40 hover:scale-[1.02] active:scale-98 disabled:cursor-not-allowed disabled:opacity-70 sm:text-base"
                     >
                       {isSubmitting ? <Loader2 className="h-5 w-5 animate-spin" /> : <Send className="h-5 w-5 transition-transform group-hover:translate-x-1" />}
-                      <span>{isSubmitting ? "Saving to Google Sheets..." : "Transmit Project Transmission"}</span>
+                      <span>{isSubmitting ? "Loading..." : "Transmit Project Transmission"}</span>
                     </button>
 
                     <p className="text-center text-[11px] leading-5 text-slate-500">
